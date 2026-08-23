@@ -1,0 +1,323 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-bg: #07080a;
+  --color-bg-elevated: #0e1014;
+  --color-fg: #f2f1ee;
+  --color-fg-muted: #9a9890;
+  --color-fg-subtle: #5c5a54;
+  --color-border: color-mix(in oklab, var(--color-fg) 12%, transparent);
+  --color-accent: #c4c0b4;
+  --color-traveler: #4ea3ff;
+  --color-traveler-muted: #8ec4ff;
+
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-2xl: clamp(2rem, 1.4rem + 2vw, 3rem);
+  --text-3xl: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --motion-fast: 250ms;
+  --motion-emphasis: 500ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    min-height: 100dvh;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+/* Mobile-only album frame — PC is unchanged */
+@media (max-width: 768px) {
+  .album-frame {
+    padding: 8px;
+    border-radius: 8px;
+    background:
+      linear-gradient(
+        158deg,
+        color-mix(in oklab, var(--color-fg) 42%, #9a8860) 0%,
+        #161410 46%,
+        color-mix(in oklab, var(--color-accent) 38%, #2c2618) 100%
+      );
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.46),
+      0 3px 8px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .album-frame-inner {
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.38);
+  }
+}
+
+.lux-card {
+  border: 1px solid rgba(232, 213, 163, 0.14);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.lux-card img {
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lux-card:hover,
+  .group:hover .lux-card {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(232, 213, 163, 0.46);
+    box-shadow:
+      0 22px 48px rgba(0, 0, 0, 0.55),
+      0 0 18px rgba(232, 213, 163, 0.12);
+  }
+
+  .lux-card:hover img,
+  .group:hover .lux-card img {
+    transform: scale(1.03);
+    filter: brightness(1.06);
+  }
+}
+
+@media (hover: none) {
+  .lux-card:active {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(232, 213, 163, 0.32);
+  }
+}
+
+/* Page 4 small-window caption bars — soft shimmer */
+@keyframes caption-bar-shimmer {
+  0% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -40% 0;
+  }
+}
+
+@keyframes caption-bar-glow {
+  0%,
+  100% {
+    border-color: color-mix(in oklab, var(--color-fg) 12%, transparent);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  }
+  50% {
+    border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+    box-shadow:
+      0 2px 12px rgba(0, 0, 0, 0.2),
+      0 0 18px color-mix(in oklab, var(--color-accent) 22%, transparent);
+  }
+}
+
+.caption-bar-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  animation: caption-bar-glow 3.6s ease-in-out infinite;
+}
+
+.caption-bar-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    color-mix(in oklab, var(--color-fg) 8%, transparent) 45%,
+    color-mix(in oklab, var(--color-accent) 55%, transparent) 50%,
+    color-mix(in oklab, var(--color-fg) 10%, transparent) 55%,
+    transparent 62%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  animation: caption-bar-shimmer 2.8s ease-in-out infinite;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.caption-bar-shimmer > * {
+  position: relative;
+  z-index: 2;
+}
+
+.caption-bar-shimmer--d1 {
+  animation-delay: 0s;
+}
+.caption-bar-shimmer--d1::after {
+  animation-delay: 0s;
+}
+.caption-bar-shimmer--d2 {
+  animation-delay: 0.45s;
+}
+.caption-bar-shimmer--d2::after {
+  animation-delay: 0.45s;
+}
+.caption-bar-shimmer--d3 {
+  animation-delay: 0.9s;
+}
+.caption-bar-shimmer--d3::after {
+  animation-delay: 0.9s;
+}
+
+@keyframes join-hint-wave {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.72;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+.join-hint-wave {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--color-fg-muted) 70%, transparent) 0%,
+    var(--color-fg) 42%,
+    var(--color-traveler) 58%,
+    color-mix(in oklab, var(--color-fg-muted) 70%, transparent) 100%
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: join-hint-wave 3.6s ease-in-out infinite;
+}
+
+@keyframes main-frame-zoom {
+  from {
+    transform: scale(0.84);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.main-frame-zoom {
+  animation: main-frame-zoom 7.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes album-leave-next {
+  to {
+    transform: rotateY(-16deg) translateX(-6%);
+    opacity: 0;
+  }
+}
+
+@keyframes album-enter-next {
+  from {
+    transform: rotateY(14deg) translateX(7%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes album-leave-prev {
+  to {
+    transform: rotateY(16deg) translateX(6%);
+    opacity: 0;
+  }
+}
+
+@keyframes album-enter-prev {
+  from {
+    transform: rotateY(-14deg) translateX(-7%);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.album-leave-next {
+  animation-name: album-leave-next;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+.album-enter-next {
+  animation-name: album-enter-next;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+.album-leave-prev {
+  animation-name: album-leave-prev;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+.album-enter-prev {
+  animation-name: album-enter-prev;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
