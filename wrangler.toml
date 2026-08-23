@@ -1,0 +1,11 @@
+# Cloudflare Pages + Workers (SSR + /api/*)
+# Used with: vite.cloudflare.config.ts → nitro preset "cloudflare-pages"
+# Does not affect Vercel (.vercel/output) builds.
+
+name = "moons-ai-travel-member"
+compatibility_date = "2025-08-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "dist"
+
+# Optional: set account_id in your local wrangler login / CF dashboard
+# account_id = ""
