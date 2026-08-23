@@ -1,6 +1,6 @@
 # Moon's AI Travel
 
-Landing site: travel gallery, Google Drive media, admin, multilingual UI.
+Landing site with travel gallery, Google Drive photos/videos, admin, and multilingual UI.
 
 ## Run
 
@@ -9,6 +9,4 @@ npm install
 npm run dev
 ```
 
-## Note
-
-Do not commit `node_modules`. Google Drive originals stay on Drive; this repo is the website source.
+Do not commit `node_modules`. Drive originals stay on Google Drive.
